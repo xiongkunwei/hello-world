@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+<style type="text/css">
+.hd_serach_tab{position:absolute;top:2px;left:2px;z-index:3;width:68px;height:28px;overflow:hidden;border:1px solid #e1e1e1;border-top:0;border-bottom:0;background:#f8f8f8}
+.hd_serach_tab a{display:block;width:53px;height:28px;padding-left:15px;line-height:28px;text-decoration:none}
+.hd_serach_tab i{position:absolute;right:12px;top:12px;display:block;width:7px;height:10px;overflow:hidden;background:url(../images/indexhead_sprite.png?1606513) no-repeat -235px -60px;-moz-transition:all .3s;-webkit-transition:all .3s;-o-transition:all .3s;transition:all .3s}
+.hd_head_search .hd_serach_tab_hover{height:auto;border-bottom:1px solid #e1e1e1}
+</style>
+<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+<script> 
+$(function(){
+	var itemCount = $("#hdSearchTab").find("a").length;
+	var itemHight = $("#hdSearchTab").find("a").first().height();
+	
+	//鼠标事件
+	$("#hdSearchTab").bind({"mouseover":function(){
+			$(this).css("height",itemHight*itemCount+'px');
+		},"mouseout":function(){
+			$(this).css("height",itemHight+'px');
+		}
+	});
+
+	 $("#hdSearchTab").find("a").each(function(index){
+		$(this).css({"position":"absolute"}).css("top",index*itemHight+"px");
+		$(this).bind({"click":function(){
+			var _selected = $("#hdSearchTab a[data-type="+$("#hdSearchTab").attr("data-type")+"]");
+			var _this = $(this);
+			if(_selected.attr("data-type")!=_this.attr("data-type")){
+				//交换两个元素的位置
+				var selectedTop = _selected.offset().top-_this.parent().offset().top;
+				var thisTop = _this.offset().top-_this.parent().offset().top;
+				_selected.css("top",thisTop+"px");
+				_this.css("top",selectedTop+"px");
+				$("#hdSearchTab").attr("data-type",_this.attr("data-type"));
+				$("#hdSearchTab").css("height",itemHight+'px');			
+			}
+		}})
+	 });
+
+})
+</script> 
+</head>
+<body>
+<div id="hdSearchTab" class="hd_serach_tab" data-type="0">
+<a data-type="0" href="javascript:;" >店铺</a>
+<a data-type="1" href="javascript:;">商品1</a>
+<a data-type="2" href="javascript:;">商品2</a>
+<a data-type="3" href="javascript:;">商品3</a>
+<a data-type="4" href="javascript:;">商品4</a>
+<a data-type="5" href="javascript:;">商品5</a>
+</div>
+</body>
+</html>
